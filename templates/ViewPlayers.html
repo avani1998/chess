@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>NYU Tandon CS-GY 6513 Chess Players Analytics</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="NYU Tandon CS-GY 6513 Chess Players Analytics">
+	<meta name="keywords" content="HTML">
+	<meta name="author" content="Heath Li">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="static/assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
+</head>
+	<body class="index is-preload">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+			<header id="header">
+				<h1 id="logo"><a href="/">NYU Tandon CS-GY 6513<br><span>Chess Players Analytics</span></a></h1>
+				<nav id="nav">
+					<ul>
+						<li class="current"><a href="#top" class="button">View Players</a></li>
+						<li class="submenu">
+							<a href="#">Menu</a>
+							<ul>
+								<li><a href="/">Home</a></li>
+								<li><a href="/gameSection">View Matches</a></li>
+								<li><a href="/playerSection">View Players</a></li>
+								<li><a href="/contact">Contact</a></li>
+							</ul>
+						</li>
+						<li><a href="https://www.nyu.edu/"><img src="static/images/tandon_long_color.png" style="max-height: 32px;"></a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<!-- Main -->
+			<article id="main">
+
+				<header class="special container">
+					<span class="icon solid fa-mobile-alt"></span>
+					<h2>Player Section</h2>
+					<div class="selectPlayer">
+						<form class="form" method="post" action="{{ url_for('getPlayerStats') }}">
+							<input style="flex-basis: calc(50%);" type="text" name="player_1_name" oninput="filterNames()" placeholder="Enter player name">
+							<input style="flex-basis: calc(50%);" type="submit" value="Submit">
+							<select name="player_1_name_select" id="player-1-select" size="5" style="display:none" onchange="updateInput()">
+							  {% for option in options %}
+								<option value="{{ option }}">{{ option }}</option>
+							  {% endfor %}
+							</select>
+							<input type="hidden" name="player_1_name" id="player-1-name">
+						</form>
+					</div>
+				</header>
+
+				
+
+				<!-- One -->
+				<section class="wrapper style4 container">
+
+					
+					{% if not stats %}
+
+					<p>Player Statics will appear here</p>
+
+					{% endif %}
+				
+					<!-- Content -->
+					{% if stats %}
+					<div class="text">
+						Stats of {{ selectedPlayer }}:
+					</div>
+					<div class="list">
+						<p class="names">Wins: {{ stats['wins'] }}</p>
+						<p class="names">Losses: {{ stats['losses'] }}</p>
+						<p class="names">Draws: {{ stats['draws'] }}</p>
+						<img src="static/output/rating.png">
+					</div>
+					{% endif %}
+				
+				</section>
+
+			</article>
+
+			<!-- Footer -->
+			<footer id="footer">
+
+				<ul class="icons">
+					<li><a href="#" class="icon brands circle fa-twitter"><span class="label">Twitter</span></a></li>
+					<li><a href="#" class="icon brands circle fa-facebook-f"><span class="label">Facebook</span></a></li>
+					<li><a href="#" class="icon brands circle fa-google-plus-g"><span class="label">Google+</span></a></li>
+					<li><a href="#" class="icon brands circle fa-github"><span class="label">Github</span></a></li>
+					<li><a href="#" class="icon brands circle fa-dribbble"><span class="label">Dribbble</span></a></li>
+				</ul>
+
+				<ul class="copyright">
+					<li>&copy; NYU Tandon CS-GY 6513 Chess Players Analytics. Spring 2023.</li>
+					<li>Design: Heath Li</li>
+					<li><a href="mailto:hl4387@nyu.edu">hl4387@nyu.edu</a></li>
+				</ul>
+
+			</footer>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/jquery.dropotron.min.js"></script>
+			<script src="static/assets/js/jquery.scrolly.min.js"></script>
+			<script src="static/assets/js/jquery.scrollex.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+			<script src="static/assets/js/jquery-3.1.1.min.js"></script>
+			<script src="static/assets/js/bootstrap.min.js"></script>
+			<script>
+				function filterNames() {
+				  var input = document.querySelector('input[name="player_1_name"]');
+				  var select = document.querySelector('#player-1-select');
+				  var options = select.options;
+				  for (var i = 0; i < options.length; i++) {
+					var option = options[i];
+					var optionText = option.text.toLowerCase();
+					var searchText = input.value.toLowerCase();
+					if (optionText.includes(searchText)) {
+					  option.style.display = '';
+					} else {
+					  option.style.display = 'none';
+					}
+				  }
+
+				  if(searchText.length == 0) {
+					select.style.display = 'none';
+				  }
+				  else {
+				  	select.style.display = 'flex';
+					select.style.flexBasis = '100%';
+				  }
+				}
+			  
+				function updateInput() {
+				  var select = document.querySelector('#player-1-select');
+				  var input = document.querySelector('input[name="player_1_name"]');
+				  input.value = select.value;
+				}
+			  </script>
+
+	</body>
+</html>

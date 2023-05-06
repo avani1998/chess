@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Image Slideshow</title>
+	<style>
+		.mySlides Img {
+			height: 30em;
+			width: 30em;
+		}
+
+		.slideshow-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 2em;
+		}
+
+		.forButton {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			margin-top: 1em;
+		}
+
+		#prevBtn {
+			background-image: url('/static/images/left.png');
+			background-size: cover;
+			background-position: center;
+			padding: 10px 20px;
+		}
+
+		#nextBtn {
+			background-image: url('/static/images/right.png');
+			background-size: cover;
+			background-position: center;
+			padding: 10px 20px;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<div class="slideshow-container">
+		{% for image_name in image_names %}
+		<div class="mySlides">
+			<img src="{{ url_for('static', filename=image_name) }}">
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="forButton">
+		<button id="prevBtn"></button>
+		<button id="nextBtn"></button>
+	</div>
+	<button class="forButton" onclick="window.location.href='/gameSection'">Go Back</button>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			var slideIndex = 1;
+			showSlide(slideIndex);
+
+			$('#prevBtn').click(function () {
+				showSlide(slideIndex -= 1);
+			});
+
+			$('#nextBtn').click(function () {
+				showSlide(slideIndex += 1);
+			});
+
+			function showSlide(n) {
+				var i;
+				var slides = $('.mySlides');
+				if (n > slides.length) { slideIndex = 1 }
+				if (n < 1) { slideIndex = slides.length }
+				for (i = 0; i < slides.length; i++) {
+					slides[i].style.display = "none";
+				}
+				slides[slideIndex - 1].style.display = "block";
+			}
+		});
+	</script>
+
+
+</body>
+
+</html>
