@@ -2,7 +2,7 @@
 Big Data Project for CS-GY 6513
 
 Please download the database used for this project from <br>
-https://drive.google.com/file/d/1F8QWIkjhrOJdqkNrlN19nnWQpeww-2mv/view?pli=1
+[Download](https://drive.google.com/file/d/1F8QWIkjhrOJdqkNrlN19nnWQpeww-2mv/view?usp=sharing)
 
 Make sure mongoDB is connected on localhost on port number 27017
 
